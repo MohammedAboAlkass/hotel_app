@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Final+Project_UCAS</string>
+    <string name="hotel_app">HOTEL APP</string>
+    <string name="title_login">Login to your \nAccount</string>
+    <string name="email">Email</string>
+    <string name="password">password</string>
+    <string name="remember">Remember me</string>
+    <string name="Sign_in">Sign in</string>
+    <string name="forgot">Forgot the password ?</string>
+    <string name="or">or continue with</string>
+    <string name="have_account">Don`t have an account ?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="no_path">no path</string>
+    <string name="no_path2">no_path2</string>
+    <string name="no_path3">no_path3</string>
+    <string name="create_your_account">Create Your \nAccount</string>
+    <string name="user_name">user Name</string>
+</resources>

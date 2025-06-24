@@ -1,0 +1,56 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_margin="6dp"
+    android:layout_height="wrap_content"
+    android:padding="22dp"
+    android:elevation="4dp">
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:padding="22dp"
+        android:layout_height="wrap_content">
+
+        <TextView android:id="@+id/tv_room_type"
+            android:text="Room Type"
+            android:textSize="18sp"
+            tools:ignore="HardcodedText"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView android:id="@+id/tv_dates"
+            android:text="From - To"
+            tools:ignore="HardcodedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView android:id="@+id/tv_guests"
+            android:text="Guests: 2"
+            android:layout_width="wrap_content"
+            tools:ignore="HardcodedText"
+            android:layout_height="wrap_content"/>
+
+        <TextView android:id="@+id/tv_status"
+            android:text="Status: Confirmed"
+            android:textStyle="italic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="HardcodedText"
+            android:layout_marginBottom="6dp"/>
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:text="Cancel Booking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="HardcodedText"
+            android:background="@drawable/bg_button"
+            />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
