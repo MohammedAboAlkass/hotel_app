@@ -47,6 +47,7 @@
             android:text="Cancel Booking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="12dp"
             tools:ignore="HardcodedText"
             android:background="@drawable/bg_button"
             />

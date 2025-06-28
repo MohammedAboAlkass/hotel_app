@@ -7,15 +7,29 @@
     android:layout_height="wrap_content">
 
     <EditText
+        android:id="@+id/roomNumberID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="room number"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="Autofill,HardcodedText,TextFields" />
+
+
+    <EditText
         android:id="@+id/editTextText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="price"
+        android:layout_marginTop="16dp"
         android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/roomNumberID"
+        app:layout_constraintStart_toStartOf="@+id/roomNumberID"
+        app:layout_constraintTop_toBottomOf="@+id/roomNumberID"
         tools:ignore="Autofill" />
 
     <EditText

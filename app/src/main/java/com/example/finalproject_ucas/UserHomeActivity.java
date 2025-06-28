@@ -1,36 +1,32 @@
 package com.example.finalproject_ucas;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finalproject_ucas.adapter.RoomDetailsAdapter;
 import com.example.finalproject_ucas.adapter.SpacesItemDecoration;
-import com.example.finalproject_ucas.databinding.ActivityLoginScreenBinding;
 import com.example.finalproject_ucas.databinding.ActivityUserHomeBinding;
-import com.example.finalproject_ucas.model.RoomDetails;
+import com.example.finalproject_ucas.model.RoomDetailsAdmin;
 
 import java.util.ArrayList;
 
 public class UserHomeActivity extends AppCompatActivity {
      ActivityUserHomeBinding binding;
 
-     ArrayList<RoomDetails> roomArrayList ;
-
+    DBHelper dbHelper;
+    ArrayList<RoomDetailsAdmin> roomList;
+    RoomDetailsAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +37,15 @@ public class UserHomeActivity extends AppCompatActivity {
         WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
 
         setSupportActionBar(binding.toolbar);
+        dbHelper = new DBHelper(this);
 
 
-        roomArrayList = new ArrayList<>();
+        roomList = dbHelper.getAllRooms();  // جلب بيانات الغرف
 
-        RoomDetailsAdapter adapter = new RoomDetailsAdapter(this,roomArrayList);
+         adapter = new RoomDetailsAdapter(this,roomList);
         RecyclerView.LayoutManager lm = new LinearLayoutManager(this);
+
+
         binding.recyclerViewID.setLayoutManager(lm);
         binding.recyclerViewID.setAdapter(adapter);
         binding.recyclerViewID.addItemDecoration(new SpacesItemDecoration(50));
@@ -70,6 +69,25 @@ public class UserHomeActivity extends AppCompatActivity {
             Intent i = new Intent(this, MyBooking.class);
             startActivity(i);
             
+        }else if (id == R.id.logoutID) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(UserHomeActivity.this);
+            builder.setTitle("هل تريد فعلا الخروج من التطبيق");
+            builder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent i = new Intent(UserHomeActivity.this, LoginScreen.class);
+                    startActivity(i);
+                    finish();
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.show();
+
         }
         return super.onOptionsItemSelected(item);
     }

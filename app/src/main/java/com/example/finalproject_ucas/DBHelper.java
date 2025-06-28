@@ -5,10 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 
 import androidx.annotation.Nullable;
 
 import com.example.finalproject_ucas.model.Booking;
+import com.example.finalproject_ucas.model.RoomDetailsAdmin;
 import com.example.finalproject_ucas.model.Users;
 
 import java.util.ArrayList;
@@ -41,7 +43,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "room_type TEXT," +
                 "price_per_night REAL," +
                 "availability INTEGER," +
-                "image_uri TEXT" +
+                "image_uri TEXT," +
+                "descrip TEXT" +
                 ")");
 
         db.execSQL("CREATE TABLE BOOKING (" +
@@ -99,10 +102,10 @@ public class DBHelper extends SQLiteOpenHelper {
             userType = cursor.getInt(0);  // ياخذ قيمة admin من أول عمود بالـ cursor
         }
         cursor.close();
-        db.execSQL("INSERT INTO ROOMS (room_number, room_type, price_per_night, availability, image_uri) VALUES " +
-                "('101', 'Single Room', 50.0, 1, '" + 0 + "')," +
-                "('102', 'Double Room', 75.0, 1, '" + 0 + "')," +
-                "('201', 'Suite', 120.0, 1, '" + 0 + "')");
+//        db.execSQL("INSERT INTO ROOMS (room_number, room_type, price_per_night, availability, image_uri) VALUES " +
+//                "('101', 'Single Room', 50.0, 1, '" + 0 + "')," +
+//                "('102', 'Double Room', 75.0, 1, '" + 0 + "')," +
+//                "('201', 'Suite', 120.0, 1, '" + 0 + "')");
         return userType;
     }
     public boolean addBooking(int userid, int roomId, String checkIn, String checkOut, int guests, String status) {
@@ -158,6 +161,53 @@ public class DBHelper extends SQLiteOpenHelper {
         db.delete("ROOMS", "room_id = ?", new String[]{String.valueOf(roomId)});
     }
 
+    public boolean addRoom(RoomDetailsAdmin room) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        String imageUri = String.valueOf(room.getImageUri());
+
+        values.put("room_number", room.getRoomNumber());
+        values.put("room_type", room.getRoomType());
+        values.put("price_per_night", room.getPricePerNight());
+        values.put("availability", room.getAvailability());
+        values.put("image_uri", room.getImageUri().toString());
+
+        long result = db.insert("ROOMS", null, values);
+        return result != -1;  // لو -1 معناها فشل الإضافة
+    }
+public ArrayList<RoomDetailsAdmin> getAllRooms() {
+    ArrayList<RoomDetailsAdmin> roomList = new ArrayList<>();
+    SQLiteDatabase db = this.getReadableDatabase();
+    Cursor cursor = db.rawQuery("SELECT * FROM ROOMS", null);
+    if (cursor.moveToFirst()) {
+        do {
+            int roomId = cursor.getInt(cursor.getColumnIndexOrThrow("room_id"));
+            String roomNumber = cursor.getString(cursor.getColumnIndexOrThrow("room_number"));
+            String roomType = cursor.getString(cursor.getColumnIndexOrThrow("room_type"));
+            double price = cursor.getDouble(cursor.getColumnIndexOrThrow("price_per_night"));
+            int availability = cursor.getInt(cursor.getColumnIndexOrThrow("availability"));
+            String imageUri = cursor.getString(cursor.getColumnIndexOrThrow("image_uri"));
+            String desc = cursor.getString(cursor.getColumnIndexOrThrow("descrip"));
+            RoomDetailsAdmin room = new RoomDetailsAdmin(roomId, roomNumber, roomType, price, availability, imageUri, desc);
+            roomList.add(room);
+        } while (cursor.moveToNext());
+    }
+    cursor.close();
+    return roomList;
+}
+    public boolean updateRoom(RoomDetailsAdmin room) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("room_type", room.getRoomType());
+        values.put("price_per_night", room.getPricePerNight());
+        values.put("room_number", room.getRoomNumber());
+        values.put("descrip", room.getDesc());
+        values.put("image_uri", room.getImageUri());
+        int updated = database.update("ROOMS", values, "room_id=?", new String[]{String.valueOf(room.getRoomId())});
+
+        return updated > 0;
+    }
 
 
 }
